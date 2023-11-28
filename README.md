@@ -14,7 +14,7 @@
 [npm-downloads-href]: https://npmjs.com/package/@murongg/utils
 [bundle-src]: https://img.shields.io/bundlephobia/minzip/@murongg/utils?style=flat&colorA=080f12&colorB=6e70d4&label=minzip
 [bundle-href]: https://bundlephobia.com/result?p=@murongg/utils
-[license-src]: https://img.shields.io/github/license/murongg/@murongg/utils.svg?style=flat&colorA=080f12&colorB=6e70d4
-[license-href]: https://github.co/@murongg/utils/blob/main/LICENSE
+[license-src]: https://img.shields.io/github/license/murongg/utils.svg?style=flat&colorA=080f12&colorB=6e70d4
+[license-href]: https://github.co/murongg/utils/blob/main/LICENSE
 [jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=6e70d4
 [jsdocs-href]: https://www.jsdocs.io/package/@murongg/utils

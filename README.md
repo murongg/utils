@@ -18,3 +18,5 @@
 [license-href]: https://github.co/murongg/utils/blob/main/LICENSE
 [jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=6e70d4
 [jsdocs-href]: https://www.jsdocs.io/package/@murongg/utils
+
+Thanks for antfu: [@antfu/utils](https://github.com/antfu/utils)

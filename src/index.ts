@@ -1,3 +1,5 @@
 export * from '@antfu/utils'
-export type * from './types'
 export * from './is'
+export * from './to'
+
+export type * from './types'

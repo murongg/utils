@@ -7,13 +7,13 @@
   "author": "MuRong <hi@mrong.me>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/murongg",
-  "homepage": "https://github.com/murongg/@murongg/utils#readme",
+  "homepage": "https://github.com/murongg/utils#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/murongg/@murongg/utils.git"
+    "url": "git+https://github.com/murongg/utils.git"
   },
   "bugs": {
-    "url": "https://github.com/murongg/@murongg/utils/issues"
+    "url": "https://github.com/murongg/utils/issues"
   },
   "keywords": [],
   "sideEffects": false,

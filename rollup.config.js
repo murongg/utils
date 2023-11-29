@@ -37,6 +37,23 @@ export default [
         file: input.replace('src/', 'dist/').replace('.ts', '.cjs'),
         format: 'cjs',
       },
+      {
+        file: input.replace('src/', 'dist/').replace('.ts', '.iife.js'),
+        format: 'iife',
+        extend: true,
+        name: 'Utils',
+      },
+      {
+        file: input.replace('src/', 'dist/').replace('.ts', '.iife.min.js'),
+        format: 'iife',
+        extend: true,
+        name: 'Utils',
+        plugins: [
+          esbuild({
+            minify: true,
+          }),
+        ],
+      },
     ],
     external: [],
     plugins,

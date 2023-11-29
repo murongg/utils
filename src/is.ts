@@ -1,4 +1,4 @@
-import { isNumber } from '@antfu/utils'
+import { isNumber, isString } from '@antfu/utils'
 
 /**
  * Check if the value is a string of number
@@ -6,7 +6,7 @@ import { isNumber } from '@antfu/utils'
  * @returns
  */
 export function isStringNumber(val: string): boolean {
-  return /^\d+$/.test(val)
+  return /^\d+$/.test(val) && isString(val)
 }
 
 /**

@@ -10,6 +10,7 @@ it('isMaybeNumber', () => {
 })
 
 it('isStringNumber', () => {
+  expect(isStringNumber(1 as unknown as string)).toBeFalsy()
   expect(isStringNumber('1')).toBeTruthy()
   expect(isStringNumber('0')).toBeTruthy()
   expect(isStringNumber('0a')).toBeFalsy()

@@ -1,4 +1,5 @@
 import { isNumber, isString } from '@antfu/utils'
+import { RegexpRules } from './regexp_rules'
 
 /**
  * Check if the value is a string of number
@@ -16,4 +17,54 @@ export function isStringNumber(val: string): boolean {
  */
 export function isMaybeNumber(val: any): boolean {
   return isNumber(val) || isStringNumber(val)
+}
+
+/**
+ * Check if the value is a email
+ * @param val
+ * @returns
+ */
+export function isEmail(val: string): boolean {
+  return RegexpRules.email.test(val)
+}
+
+/**
+ * Check if the value is a ipv6
+ * @param val
+ * @returns
+ */
+export function isIpv6(val: string): boolean {
+  return RegexpRules.ipv6.test(val)
+}
+
+/**
+ * Check if the value is a ipv4
+ * @param val
+ * @returns
+ */
+export function isIpv4(val: string): boolean {
+  return RegexpRules.ipv4.test(val)
+}
+
+/**
+ * Check if the value is a ip address
+ * @param val
+ * @param type
+ * @returns
+ */
+export function isIpAddress(val: string): boolean
+export function isIpAddress(val: string, type: 'ipv4' | 'ipv6'): boolean
+export function isIpAddress(val: string, type?: 'ipv4' | 'ipv6'): boolean {
+  if (type)
+    return type === 'ipv4' ? isIpv4(val) : isIpv6(val)
+  return isIpv4(val) || isIpv6(val)
+}
+
+/**
+ * Check if the value is a url
+ * @param val
+ * @returns
+ */
+export function isURL(val: string): boolean {
+  return RegexpRules.url.test(val)
 }

@@ -44,3 +44,16 @@ it('Polling function with default interval and maxAttempts', async () => {
   expect(result).toBe(false)
   expect(fn).toHaveBeenCalledTimes(100)
 })
+
+it('Polling function with custom interval function', async () => {
+  const fn = vi.fn()
+    .mockResolvedValueOnce(false)
+    .mockResolvedValueOnce(false)
+    .mockResolvedValueOnce(true)
+  const result = await polling(fn, attemptTime => 100 * attemptTime, 3)
+  expect(result).toBe(true)
+  expect(fn).toHaveBeenCalledTimes(3)
+  expect(fn).toHaveBeenNthCalledWith(1)
+  expect(fn).toHaveBeenNthCalledWith(2)
+  expect(fn).toHaveBeenNthCalledWith(3)
+})

@@ -22,3 +22,8 @@ export type NullableArray<T> = {
 export type NullableObjectWithKeys<T extends Object, Key extends keyof T> = {
   [P in keyof T]: P extends Key ? Nullable<T[P]> : T[P]
 }
+
+/**
+ * Array value null or whatever with keys
+ */
+export type KeyofToArray<T extends Object> = keyof T extends never ? never[] : (keyof T)[]

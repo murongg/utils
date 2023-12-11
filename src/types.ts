@@ -31,6 +31,6 @@ export type KeyofToArray<T extends object> = keyof T extends never ? [] : (keyof
 /**
  * Reset object value
  */
-export type ValueReset<T extends object, K, V> = {
+export type ValueReset<T extends object, K extends keyof T, V> = {
   [P in keyof T]: P extends K ? V : T[P]
 }

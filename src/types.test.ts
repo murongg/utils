@@ -26,4 +26,5 @@ type cases = [
     a: string
     b: string
   }>, ('a' | 'b')[]>>,
+  Expect<Equal<KeyofToArray<{}>, []>>,
 ]

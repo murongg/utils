@@ -58,6 +58,7 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@type-challenges/utils": "^0.1.1",
     "@types/node": "^20.10.0",
     "@types/throttle-debounce": "^5.0.2",
     "bumpp": "^9.2.0",

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Equal, Expect } from '@type-challenges/utils'
-import type { KeyofToArray, NullableArray, NullableObject, NullableObjectWithKeys } from './types'
+import type { KeyofToArray, NullableArray, NullableObject, NullableObjectWithKeys, ValueReset } from './types'
 
 type cases = [
   // test NullableObject
@@ -27,4 +27,12 @@ type cases = [
     b: string
   }>, ('a' | 'b')[]>>,
   Expect<Equal<KeyofToArray<{}>, []>>,
+  // test ValueReset
+  Expect<Equal<ValueReset<{
+    a: string
+    b: string
+  }, 'a', number>, {
+    a: number
+    b: string
+  }>>,
 ]

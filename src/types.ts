@@ -27,3 +27,10 @@ export type NullableObjectWithKeys<T extends object, Key extends keyof T> = {
  * Array value null or whatever with keys
  */
 export type KeyofToArray<T extends object> = keyof T extends never ? [] : (keyof T)[]
+
+/**
+ * Reset object value
+ */
+export type ValueReset<T extends object, K, V> = {
+  [P in keyof T]: P extends K ? V : T[P]
+}

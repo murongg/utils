@@ -31,16 +31,22 @@ export async function polling(fn: Fn<Promise<boolean> | boolean>, interval: numb
 /**
  * Retries a promise a given number of times
  * @param fn
+ * @param condition
  * @param retries
- * @returns
  */
-export async function retry<T>(fn: () => Promise<T>, retries: number): Promise<T> {
+export async function retry<T>(fn: () => Promise<T>, retries: number): Promise<T>
+export async function retry<T, E extends Error>(fn: () => Promise<T>, condition: (error: E) => boolean, retries: number): Promise<T>
+export async function retry<T, E extends Error>(fn: () => Promise<T>, condition: number | ((error: E) => boolean), retries = 0): Promise<T> {
+  if (typeof condition === 'number') {
+    retries = condition
+    condition = () => true
+  }
   try {
     return await fn()
   }
-  catch (error) {
-    if (retries > 0)
-      return await retry(fn, retries - 1)
+  catch (error: any) {
+    if (retries > 0 && condition(error))
+      return await retry(fn, condition, retries - 1)
 
     throw error
   }

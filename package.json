@@ -2,7 +2,7 @@
   "name": "@murongg/utils",
   "type": "module",
   "version": "0.1.16",
-  "packageManager": "pnpm@8.10.5",
+  "packageManager": "pnpm@8.12.0",
   "description": "",
   "author": "MuRong <hi@mrong.me>",
   "license": "MIT",
@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@antfu/ni": "^0.21.10",
-    "@antfu/utils": "^0.7.6",
+    "@antfu/utils": "^0.7.7",
     "@murongg/eslint-config": "^0.2.1",
     "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-commonjs": "^25.0.7",

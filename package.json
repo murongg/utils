@@ -1,7 +1,7 @@
 {
   "name": "@murongg/utils",
   "type": "module",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "packageManager": "pnpm@8.12.0",
   "description": "",
   "author": "MuRong <hi@mrong.me>",

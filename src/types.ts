@@ -1,4 +1,4 @@
-import type { Nullable } from '@antfu/utils'
+import type { Constructor, Nullable } from '@antfu/utils'
 
 /**
  * Object value null or whatever
@@ -34,3 +34,8 @@ export type KeyofToArray<T extends object> = keyof T extends never ? [] : (keyof
 export type ValueReset<T extends object, K extends keyof T, V> = {
   [P in keyof T]: P extends K ? V : T[P]
 }
+
+/**
+ * Maybe Constructor
+ */
+export type MaybeConstructor<T> = T extends Constructor<T> ? Constructor<T> : T

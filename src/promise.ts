@@ -1,5 +1,7 @@
 import { type Fn, sleep } from '@antfu/utils'
 
+export { to } from 'await-to-js'
+
 /**
  * Polling until the condition is met
  * @param fn

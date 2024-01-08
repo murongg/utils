@@ -61,6 +61,7 @@
     "@type-challenges/utils": "^0.1.1",
     "@types/node": "^20.10.0",
     "@types/throttle-debounce": "^5.0.2",
+    "await-to-js": "^3.0.0",
     "bumpp": "^9.2.0",
     "eslint": "^8.54.0",
     "esno": "^4.0.0",

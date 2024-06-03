@@ -37,6 +37,10 @@ export interface RetryOptions<E extends Error> {
    * @returns
    */
   onFailedAttempt?: (error: E) => boolean
+  /**
+   * Delay before next attempt
+   */
+  delay?: number
 }
 
 /**
@@ -62,8 +66,11 @@ export async function retry<T, E extends Error>(fn: () => Promise<T>, condition:
   }
   catch (error: any) {
     options.onFailedAttempt && options.onFailedAttempt(error)
-    if (retries > 0 && condition(error))
+    if (retries > 0 && condition(error)) {
+      if (options.delay)
+        await sleep(options.delay)
       return await retry(fn, condition, retries - 1, options)
+    }
 
     throw error
   }

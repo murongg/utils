@@ -100,4 +100,16 @@ describe('retry', () => {
     await expect(retry(mockFn, 3, { onFailedAttempt })).rejects.toThrowError('error')
     expect(onFailedAttempt).toHaveBeenCalledTimes(4)
   })
+
+  it('should retry the function with a delay', async () => {
+    const mockFn = vi.fn()
+      .mockRejectedValueOnce(new Error('error 1'))
+      .mockRejectedValueOnce(new Error('error 2'))
+      .mockResolvedValue('success')
+    const delay = 100
+    const start = Date.now()
+    await retry(mockFn, 2, { delay })
+    const end = Date.now()
+    expect(end - start).toBeGreaterThanOrEqual(delay * 2)
+  })
 })

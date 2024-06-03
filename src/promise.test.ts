@@ -93,4 +93,11 @@ describe('retry', () => {
     await expect(retry(mockFn, condition, 3)).rejects.toThrowError('error 2')
     expect(mockFn).toHaveBeenCalledTimes(2)
   })
+
+  it('should call onFailedAttempt when the function fails', async () => {
+    const mockFn = vi.fn().mockRejectedValue(new Error('error'))
+    const onFailedAttempt = vi.fn().mockReturnValue(true)
+    await expect(retry(mockFn, 3, { onFailedAttempt })).rejects.toThrowError('error')
+    expect(onFailedAttempt).toHaveBeenCalledTimes(4)
+  })
 })

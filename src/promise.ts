@@ -30,15 +30,29 @@ export async function polling(fn: Fn<Promise<boolean> | boolean>, interval: numb
   return false
 }
 
+export interface RetryOptions<E extends Error> {
+  /**
+   * Callback when failed attempt
+   * @param error
+   * @returns
+   */
+  onFailedAttempt?: (error: E) => boolean
+}
+
 /**
  * Retries a promise a given number of times
  * @param fn
  * @param condition
  * @param retries
+ * @param options
  */
-export async function retry<T>(fn: () => Promise<T>, retries: number): Promise<T>
-export async function retry<T, E extends Error>(fn: () => Promise<T>, condition: (error: E) => boolean, retries: number): Promise<T>
-export async function retry<T, E extends Error>(fn: () => Promise<T>, condition: number | ((error: E) => boolean), retries = 0): Promise<T> {
+export async function retry<T, E extends Error>(fn: () => Promise<T>, retries: number, options?: RetryOptions<E>): Promise<T>
+export async function retry<T, E extends Error>(fn: () => Promise<T>, condition: (error: E) => boolean, retries: number, options?: RetryOptions<E>): Promise<T>
+export async function retry<T, E extends Error>(fn: () => Promise<T>, condition: number | ((error: E) => boolean), retries: number | RetryOptions<E> = 0, options: RetryOptions<E> = {}): Promise<T> {
+  if (typeof retries !== 'number') {
+    options = retries
+    retries = 0
+  }
   if (typeof condition === 'number') {
     retries = condition
     condition = () => true
@@ -47,8 +61,9 @@ export async function retry<T, E extends Error>(fn: () => Promise<T>, condition:
     return await fn()
   }
   catch (error: any) {
+    options.onFailedAttempt && options.onFailedAttempt(error)
     if (retries > 0 && condition(error))
-      return await retry(fn, condition, retries - 1)
+      return await retry(fn, condition, retries - 1, options)
 
     throw error
   }

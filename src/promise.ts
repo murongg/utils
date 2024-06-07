@@ -8,12 +8,12 @@ export { to } from 'await-to-js'
  * @param interval
  * @param maxAttempts
  * @default interval 0
- * @default maxAttempts 100
+ * @default maxAttempts Number.MAX_VALUE
  * @returns
  */
 export async function polling(fn: Fn<Promise<boolean> | boolean>, interval?: number, maxAttempts?: number): Promise<boolean>
 export async function polling(fn: Fn<Promise<boolean> | boolean>, interval?: (attemptTime: number) => number, maxAttempts?: number): Promise<boolean>
-export async function polling(fn: Fn<Promise<boolean> | boolean>, interval: number | ((attemptTime: number) => number) = 0, maxAttempts = 100): Promise<boolean> {
+export async function polling(fn: Fn<Promise<boolean> | boolean>, interval: number | ((attemptTime: number) => number) = 0, maxAttempts = Number.MAX_VALUE): Promise<boolean> {
   let attempts = 0
 
   while (attempts < maxAttempts) {

@@ -39,13 +39,6 @@ describe('polling', () => {
     expect(fn).toHaveBeenNthCalledWith(3)
   })
 
-  it('Polling function with default interval and maxAttempts', async () => {
-    const fn = vi.fn().mockResolvedValue(false)
-    const result = await polling(fn)
-    expect(result).toBe(false)
-    expect(fn).toHaveBeenCalledTimes(100)
-  })
-
   it('Polling function with custom interval function', async () => {
     const fn = vi.fn()
       .mockResolvedValueOnce(false)

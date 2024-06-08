@@ -68,3 +68,12 @@ export function isIpAddress(val: string, type?: 'ipv4' | 'ipv6'): boolean {
 export function isURL(val: string): boolean {
   return RegexpRules.url.test(val)
 }
+
+/**
+ * Check if the value is a bigint
+ * @param val
+ * @returns
+ */
+export function isBigInt(val: any): boolean {
+  return typeof val === 'bigint'
+}

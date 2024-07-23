@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { polling, retry } from './promise'
+import { polling, retry, timeout } from './promise'
 
 describe('polling', () => {
   it('Polling function returns true on the first attempt', async () => {
@@ -104,5 +104,23 @@ describe('retry', () => {
     await retry(mockFn, 2, { delay })
     const end = Date.now()
     expect(end - start).toBeGreaterThanOrEqual(delay * 2)
+  })
+})
+
+describe('timeout', () => {
+  it('should resolve with the result of the function', async () => {
+    const mockFn = vi.fn().mockResolvedValue('success')
+    const result = await timeout(mockFn, 1000)
+    expect(result).toBe('success')
+  })
+
+  it('should reject with a timeout error if the function takes too long', async () => {
+    const mockFn = vi.fn().mockImplementation(() => new Promise(resolve => setTimeout(resolve, 2000)))
+    await expect(timeout(mockFn, 1000)).rejects.toThrowError('Timeout')
+  })
+
+  it('should reject with a custom error message if provided', async () => {
+    const mockFn = vi.fn().mockImplementation(() => new Promise(resolve => setTimeout(resolve, 2000)))
+    await expect(timeout(mockFn, 1000, 'Custom timeout error')).rejects.toThrowError('Custom timeout error')
   })
 })

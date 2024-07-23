@@ -75,3 +75,22 @@ export async function retry<T, E extends Error>(fn: () => Promise<T>, condition:
     throw error
   }
 }
+
+/**
+ *  Timeout a promise
+ * @param fn
+ * @param ms
+ * @param message
+ * @returns
+ */
+export async function timeout<T>(fn: () => Promise<T>, ms: number, message?: string): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error(message || 'Timeout'))
+    }, ms)
+
+    fn().then(resolve, reject).finally(() => {
+      clearTimeout(timer)
+    })
+  })
+}

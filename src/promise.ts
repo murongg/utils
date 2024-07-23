@@ -94,3 +94,15 @@ export async function timeout<T>(fn: () => Promise<T>, ms: number, message?: str
     })
   })
 }
+
+/**
+ * Timeout a promise with retries
+ * @param fn
+ * @param ms
+ * @param retries
+ * @param message
+ * @returns
+ */
+export async function timeoutWithRetry<T>(fn: () => Promise<T>, ms: number, retries: number, message?: string): Promise<T> {
+  return retry(() => timeout(fn, ms, message), retries)
+}

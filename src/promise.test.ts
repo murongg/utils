@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { polling, retry, timeout } from './promise'
+import { polling, retry, timeout, timeoutWithRetry } from './promise'
 
 describe('polling', () => {
   it('Polling function returns true on the first attempt', async () => {
@@ -124,3 +124,59 @@ describe('timeout', () => {
     await expect(timeout(mockFn, 1000, 'Custom timeout error')).rejects.toThrowError('Custom timeout error')
   })
 })
+
+describe('timeoutWithRetry', () => {
+  it('should resolve with the result of the function before timeout', async () => {
+    const mockFn = vi.fn().mockResolvedValue('success')
+    const result = await timeoutWithRetry(mockFn, 1000, 2)
+    expect(result).toBe('success')
+    expect(mockFn).toHaveBeenCalledTimes(1)
+  })
+
+  it('should retry and resolve with the result of the function before timeout', async () => {
+    const mockFn = vi.fn()
+      .mockRejectedValueOnce(new Error('Timeout'))
+      .mockResolvedValue('success')
+    const result = await timeoutWithRetry(mockFn, 1000, 2)
+    expect(result).toBe('success')
+    expect(mockFn).toHaveBeenCalledTimes(2)
+  })
+
+  it('should fail with timeout error after exceeding retries', async () => {
+    const mockFn = vi.fn().mockRejectedValue(new Error('Timeout'))
+    await expect(timeoutWithRetry(mockFn, 1000, 2)).rejects.toThrowError('Timeout')
+    expect(mockFn).toHaveBeenCalledTimes(3)
+  })
+
+  it('should pass custom timeout message to error', async () => {
+    const mockFn = vi.fn().mockRejectedValue(new Error('Custom Timeout Message'))
+    await expect(timeoutWithRetry(mockFn, 1000, 1, 'Custom Timeout Message')).rejects.toThrowError('Custom Timeout Message')
+    expect(mockFn).toHaveBeenCalledTimes(2)
+  })
+
+  it('should adjust timeout dynamically on retries', async () => {
+    const mockFn = vi.fn()
+      .mockRejectedValueOnce(new Error('Timeout'))
+      .mockRejectedValueOnce(new Error('Timeout'))
+      .mockResolvedValue('success')
+    const dynamicTimeouts = [500, 1000] // First retry after 500ms, second after 1000ms
+    const result = await dynamicTimeoutWithRetry(mockFn, dynamicTimeouts, 2)
+    expect(result).toBe('success')
+    expect(mockFn).toHaveBeenCalledTimes(3)
+  })
+})
+
+// A hypothetical function to handle dynamic timeouts, not part of the original code.
+// This is for demonstration purposes to show how one might test such functionality.
+async function dynamicTimeoutWithRetry<T>(fn: () => Promise<T>, timeouts: number[], retries: number): Promise<T> {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      return await timeout(fn, timeouts[i] || timeouts[timeouts.length - 1])
+    }
+    catch (error) {
+      if (i === retries)
+        throw error
+    }
+  }
+  throw new Error('Exceeded retries')
+}

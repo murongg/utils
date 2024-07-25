@@ -103,6 +103,12 @@ export async function timeout<T>(fn: () => Promise<T>, ms: number, message?: str
  * @param message
  * @returns
  */
-export async function timeoutWithRetry<T>(fn: () => Promise<T>, ms: number, retries: number, message?: string): Promise<T> {
-  return retry(() => timeout(fn, ms, message), retries)
+export async function timeoutWithRetry<T>(fn: () => Promise<T>, ms: number, retries: number, message?: string): Promise<T>
+export async function timeoutWithRetry<T, E extends Error>(fn: () => Promise<T>, ms: number, retries: number, retryOptions: RetryOptions<E>): Promise<T>
+export async function timeoutWithRetry<T, E extends Error>(fn: () => Promise<T>, ms: number, retries: number, retryOptions?: RetryOptions<E> | string, message?: string): Promise<T> {
+  if (typeof retryOptions === 'string') {
+    message = retryOptions
+    retryOptions = {}
+  }
+  return retry(() => timeout(fn, ms, message), retries, retryOptions)
 }

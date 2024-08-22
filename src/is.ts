@@ -77,3 +77,18 @@ export function isURL(val: string): boolean {
 export function isBigInt(val: any): boolean {
   return typeof val === 'bigint'
 }
+
+/**
+ * Check if the value is a json string
+ * @param val
+ * @returns
+ */
+export function isJsonString(val: string): boolean {
+  try {
+    const parsed = JSON.parse(val)
+    return typeof parsed === 'object' && parsed !== null
+  }
+  catch {
+    return false
+  }
+}

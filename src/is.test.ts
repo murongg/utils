@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { isBigInt, isEmail, isIpAddress, isIpv4, isIpv6, isMaybeNumber, isStringNumber, isURL } from './is'
+import { isBigInt, isEmail, isIpAddress, isIpv4, isIpv6, isJsonString, isMaybeNumber, isStringNumber, isURL } from './is'
 
 it('isMaybeNumber', () => {
   expect(isMaybeNumber(1)).toBeTruthy()
@@ -62,4 +62,13 @@ it('isBigInt', () => {
   expect(isBigInt('1')).toBeFalsy()
   expect(isBigInt('1n')).toBeFalsy()
   expect(isBigInt('1.0')).toBeFalsy()
+})
+
+it('isJsonString', () => {
+  expect(isJsonString('{"name": "John", "age": 30}')).toBeTruthy()
+  expect(isJsonString('[1, 2, 3]')).toBeTruthy()
+  expect(isJsonString('{"name": "John", "age": "thirty"}')).toBeTruthy()
+  expect(isJsonString('{"name": "John", "age": 30')).toBeFalsy()
+  expect(isJsonString('Hello World')).toBeFalsy()
+  expect(isJsonString('123')).toBeFalsy()
 })

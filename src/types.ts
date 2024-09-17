@@ -39,3 +39,8 @@ export type ValueReset<T extends object, K extends keyof T, V> = {
  * Maybe Constructor
  */
 export type MaybeConstructor<T> = T extends Constructor<T> ? Constructor<T> : T
+
+/**
+ * Arguments function
+ */
+export type ArgumentsFn<T> = (...args: any[]) => T

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Equal, Expect, NotEqual } from '@type-challenges/utils'
-import type { KeyofToArray, MaybeConstructor, NullableArray, NullableObject, NullableObjectWithKeys, ValueReset } from './types'
+import type { ArgumentsFn, KeyofToArray, MaybeConstructor, NullableArray, NullableObject, NullableObjectWithKeys, ValueReset } from './types'
 
 class TestMaybeConstructorCase {
   a = ''
@@ -56,4 +56,9 @@ type cases = [
   Expect<Equal<MaybeConstructor<TestMaybeConstructor1>, TestMaybeConstructorInterface1>>,
   Expect<NotEqual<MaybeConstructor<TestMaybeConstructorCase>, TestMaybeConstructor1>>,
   Expect<NotEqual<MaybeConstructor<TestMaybeConstructor1>, TestMaybeConstructorCase>>,
+
+  // test RestArgumentsFn
+  Expect<Equal<ArgumentsFn<number>, (...args: any[]) => number>>,
+  Expect<Equal<ArgumentsFn<Promise<number>>, (...args: any[]) => Promise<number>>>,
+  Expect<Equal<ArgumentsFn<void>, (...args: any[]) => void>>,
 ]

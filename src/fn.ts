@@ -1,4 +1,4 @@
-import type { ArgumentsFn } from '../dist'
+import type { ArgumentsFn } from './types'
 
 /**
  * Compose functions

@@ -51,4 +51,27 @@ describe('compose', () => {
     expect(fn2).toHaveBeenCalledTimes(1)
     expect(fn3).not.toHaveBeenCalled()
   })
+
+  it('should don\'t use await motifier and execute functions in correct order', async () => {
+    const fns: number[] = []
+    const fn1 = vi.fn((arg, next) => {
+      fns.push(1)
+      next()
+      fns.push(11)
+    })
+    const fn2 = vi.fn((arg, next) => {
+      fns.push(2)
+      next()
+      fns.push(22)
+    })
+    const fn3 = vi.fn((arg, next) => {
+      fns.push(3)
+      next()
+      fns.push(33)
+    })
+    const handles = [fn1, fn2, fn3]
+
+    await compose(handles, ['arg'])
+    expect(fns).toEqual([1, 2, 3, 33, 22, 11])
+  })
 })

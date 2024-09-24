@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
+import { sleep } from '@antfu/utils'
 import { compose } from './fn'
 
 describe('compose', () => {
@@ -73,5 +74,30 @@ describe('compose', () => {
 
     await compose(handles, ['arg'])
     expect(fns).toEqual([1, 2, 3, 33, 22, 11])
+  })
+
+  it('should must use await motifier and execute functions in correct order', async () => {
+    const fns: number[] = []
+    const fn1 = vi.fn((arg, next) => {
+      fns.push(1)
+      next()
+      fns.push(11)
+    })
+    const fn2 = vi.fn(async (arg, next) => {
+      await sleep(10)
+      fns.push(2)
+      next()
+      fns.push(22)
+    })
+    const fn3 = vi.fn((arg, next) => {
+      fns.push(3)
+      next()
+      fns.push(33)
+    })
+    const handles = [fn1, fn2, fn3]
+
+    await compose(handles, ['arg'])
+    await sleep(30)
+    expect(fns).toEqual([1, 11, 2, 3, 33, 22])
   })
 })

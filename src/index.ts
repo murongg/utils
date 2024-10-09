@@ -5,5 +5,6 @@ export * from './regexp_rules'
 export * from './promise'
 export * from './array'
 export * from './fn'
+export * from './object'
 
 export type * from './types'

@@ -92,3 +92,12 @@ export function isJsonString(val: string): boolean {
     return false
   }
 }
+
+/**
+ * Check if the value is a integer
+ * @param val
+ * @returns
+ */
+export function isInteger(val: any): boolean {
+  return Number.isInteger(val)
+}

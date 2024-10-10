@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { isBigInt, isEmail, isInteger, isIpAddress, isIpv4, isIpv6, isJsonString, isMaybeNumber, isStringNumber, isURL } from './is'
+import { isBigInt, isEmail, isInteger, isIpAddress, isIpv4, isIpv6, isJsonString, isMaybeNumber, isPositiveInteger, isStringNumber, isURL } from './is'
 
 it('isMaybeNumber', () => {
   expect(isMaybeNumber(1)).toBeTruthy()
@@ -81,5 +81,16 @@ it('isInteger', () => {
   expect(isInteger('1')).toBeFalsy()
   expect(isInteger(NaN)).toBeFalsy()
   expect(isInteger(Infinity)).toBeFalsy()
+})
+
+it('isPositiveInteger', () => {
+  expect(isPositiveInteger(1)).toBeTruthy()
+  expect(isPositiveInteger(100)).toBeTruthy()
+  expect(isPositiveInteger(0)).toBeFalsy()
+  expect(isPositiveInteger(-1)).toBeFalsy()
+  expect(isPositiveInteger(1.5)).toBeFalsy()
+  expect(isPositiveInteger('1')).toBeFalsy()
+  expect(isPositiveInteger(NaN)).toBeFalsy()
+  expect(isPositiveInteger(Infinity)).toBeFalsy()
 })
 

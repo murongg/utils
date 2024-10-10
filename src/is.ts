@@ -101,3 +101,12 @@ export function isJsonString(val: string): boolean {
 export function isInteger(val: any): boolean {
   return Number.isInteger(val)
 }
+
+/**
+ *  Check if the value is a positive integer
+ * @param val
+ * @returns
+ */
+export function isPositiveInteger(val: any): boolean {
+  return isInteger(val) && val > 0
+}

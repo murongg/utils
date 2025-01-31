@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Equal, Expect, NotEqual } from '@type-challenges/utils'
-import type { ArgumentsFn, KeyofToArray, MaybeConstructor, NullableArray, NullableObject, NullableObjectWithKeys, ValueReset } from './types'
+import type { ArgumentsFn, DeepNullable, KeyofToArray, MaybeConstructor, NullableArray, NullableObject, NullableObjectWithKeys, ValueReset } from './types'
 
 class TestMaybeConstructorCase {
   a = ''
@@ -61,4 +61,51 @@ type cases = [
   Expect<Equal<ArgumentsFn<number>, (...args: any[]) => number>>,
   Expect<Equal<ArgumentsFn<Promise<number>>, (...args: any[]) => Promise<number>>>,
   Expect<Equal<ArgumentsFn<void>, (...args: any[]) => void>>,
+
+  // test DeepNullable
+  Expect<Equal<DeepNullable<string>, string | null>>,
+  Expect<Equal<DeepNullable<number>, number | null>>,
+  Expect<Equal<DeepNullable<boolean>, boolean | null>>,
+  Expect<Equal<DeepNullable<undefined>, undefined | null>>,
+  Expect<Equal<DeepNullable<null>, null | null>>,
+  Expect<Equal<DeepNullable<Date>, Date | null>>,
+  Expect<Equal<DeepNullable<RegExp>, RegExp | null>>,
+  Expect<Equal<DeepNullable<Function>, Function | null>>,
+  Expect<Equal<DeepNullable<{
+    a: string
+    b: number
+  }> | null, {
+    a: string | null
+    b: number | null
+  } | null>>,
+  Expect<Equal<DeepNullable<{
+    a: string
+    b: number
+    c: {
+      a: string
+      b: number
+    }
+    d: {
+      a: Function
+      b: RegExp
+      c: Date
+      d: undefined
+      e: null
+    }
+  }>, {
+    a: string | null
+    b: number | null
+    c: {
+      a: string | null
+      b: number | null
+    } | null
+    d: {
+      a: Function | null
+      b: RegExp | null
+      c: Date | null
+      d: undefined | null
+      e: null | null
+    } | null
+  }>>,
+
 ]

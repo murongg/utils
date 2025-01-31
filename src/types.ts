@@ -44,3 +44,16 @@ export type MaybeConstructor<T> = T extends Constructor<T> ? Constructor<T> : T
  * Arguments function
  */
 export type ArgumentsFn<T> = (...args: any[]) => T
+
+/**
+ * Deep nullable
+ */
+export type DeepNullable<T> = T extends Function
+  ? T | null
+  : T extends Date | RegExp
+    ? T | null
+    : T extends Array<infer U>
+      ? Array<DeepNullable<U>> | null
+      : T extends object
+        ? { [K in keyof T]: DeepNullable<T[K]> | null }
+        : T | null

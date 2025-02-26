@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { isBigInt, isEmail, isInteger, isIpAddress, isIpv4, isIpv6, isJsonString, isMaybeNumber, isPositiveInteger, isStringNumber, isURL } from './is'
+import { isBigInt, isEmail, isInstanceof, isInteger, isIpAddress, isIpv4, isIpv6, isJsonString, isMaybeNumber, isPositiveInteger, isStringNumber, isURL } from './is'
 
 it('isMaybeNumber', () => {
   expect(isMaybeNumber(1)).toBeTruthy()
@@ -94,3 +94,11 @@ it('isPositiveInteger', () => {
   expect(isPositiveInteger(Infinity)).toBeFalsy()
 })
 
+it('isInstanceof', () => {
+  class A {}
+  class B extends A {}
+  class C {}
+  expect(isInstanceof(new A(), A)).toBeTruthy()
+  expect(isInstanceof(new B(), A)).toBeTruthy()
+  expect(isInstanceof(new C(), A)).toBeFalsy()
+})

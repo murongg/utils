@@ -110,3 +110,13 @@ export function isInteger(val: any): boolean {
 export function isPositiveInteger(val: any): boolean {
   return isInteger(val) && val > 0
 }
+
+/**
+ * Check if the value is instance of the type
+ * @param val
+ * @param type
+ * @returns
+ */
+export function isInstanceof<T>(val: any, type: new (...args: any[]) => T): val is T {
+  return val instanceof type
+}

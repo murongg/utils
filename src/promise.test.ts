@@ -123,6 +123,11 @@ describe('timeout', () => {
     const mockFn = vi.fn().mockImplementation(() => new Promise(resolve => setTimeout(resolve, 2000)))
     await expect(timeout(mockFn, 1000, 'Custom timeout error')).rejects.toThrowError('Custom timeout error')
   })
+
+  it('should reject with a custom error message if provided', async () => {
+    const mockFn = vi.fn().mockImplementation(() => new Promise(resolve => setTimeout(resolve, 2000)))
+    await expect(timeout(mockFn, 1000, 'Custom timeout error')).rejects.toThrowError('Custom timeout error')
+  })
 })
 
 describe('timeoutWithRetry', () => {

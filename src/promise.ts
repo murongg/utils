@@ -83,10 +83,15 @@ export async function retry<T, E extends Error>(fn: () => Promise<T>, condition:
  * @param message
  * @returns
  */
-export async function timeout<T>(fn: () => Promise<T>, ms: number, message?: string): Promise<T> {
+export async function timeout<T>(fn: () => Promise<T>, ms: number, message?: string | Error): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     const timer = setTimeout(() => {
-      reject(new Error(message || 'Timeout'))
+      if (typeof message === 'string')
+        reject(new Error(message))
+      else if (message instanceof Error)
+        reject(message)
+      else
+        reject(new Error('Timeout'))
     }, ms)
 
     fn().then(resolve, reject).finally(() => {
